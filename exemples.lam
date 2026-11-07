@@ -1,0 +1,23 @@
+-- Quelques calculs, rien qu'avec des fonctions.  python3 lambda.py exemples.lam
+
+PLUS 2 3
+FOIS 3 4
+PUISS 2 5
+MOINS 10 3
+SI (EGAL? (FOIS 2 3) (PLUS 1 5)) 42 0
+
+-- le combinateur Y fabrique la récursion sans qu'aucune fonction n'ait de nom
+FACT 4
+FIB 7
+SOMME_JUSQUA 10
+
+-- une liste et des fonctions d'ordre supérieur
+LISTE = CONS 1 (CONS 2 (CONS 3 (CONS 4 NIL)))
+SOMME (CARTE (FOIS 2) LISTE)
+LONGUEUR LISTE
+
+-- S K K se comporte comme l'identité
+S K K
+
+-- le résultat est reconnu même quand il est écrit autrement
+λn. PLUS 1 n

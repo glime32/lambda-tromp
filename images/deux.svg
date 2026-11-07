@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="184" height="78" viewBox="0 0 184 78">
+<rect width="184" height="78" fill="#0b0710"/>
+<line x1="12.0" x2="12.0" y1="12.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="28.0" x2="28.0" y1="12.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="44.0" x2="44.0" y1="20.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="28.0" x2="28.0" y1="28.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="44.0" x2="44.0" y1="28.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="28.0" x2="44.0" y1="28.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="12.0" x2="12.0" y1="28.0" y2="44.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="28.0" x2="28.0" y1="36.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="12.0" x2="28.0" y1="36.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="9.2" x2="46.8" y1="20.0" y2="20.0" stroke="#ff8c42" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="9.2" x2="46.8" y1="12.0" y2="12.0" stroke="#ff8c42" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="12.0" x2="12.0" y1="44.0" y2="52.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="76.0" x2="76.0" y1="12.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="92.0" x2="92.0" y1="12.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="108.0" x2="108.0" y1="20.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="92.0" x2="92.0" y1="28.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="108.0" x2="108.0" y1="28.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="92.0" x2="108.0" y1="28.0" y2="28.0" stroke="#d6a6ff" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="76.0" x2="76.0" y1="28.0" y2="44.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="92.0" x2="92.0" y1="36.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<line x1="76.0" x2="92.0" y1="36.0" y2="36.0" stroke="#d6a6ff" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="73.2" x2="110.8" y1="20.0" y2="20.0" stroke="#ff8c42" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="73.2" x2="110.8" y1="12.0" y2="12.0" stroke="#ff8c42" stroke-width="2.4" stroke-linecap="square"/>
+<line x1="76.0" x2="76.0" y1="44.0" y2="52.0" stroke="#d6a6ff" stroke-width="2.4"/>
+<text x="28.0" y="72" fill="#a89cb8" font-family="sans-serif" font-size="11" text-anchor="middle">terme</text>
+<text x="116.0" y="72" fill="#a89cb8" font-family="sans-serif" font-size="11" text-anchor="middle">forme normale</text>
+</svg>

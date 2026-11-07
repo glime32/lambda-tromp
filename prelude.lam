@@ -1,0 +1,44 @@
+-- Prélude : tout est construit avec des fonctions, rien d'autre.
+
+-- combinateurs classiques
+I = λx. x
+K = λx y. x
+S = λx y z. x z (y z)
+OMEGA = (λx. x x) (λx. x x)          -- ne s'arrête jamais
+Y = λf. (λx. f (x x)) (λx. f (x x))   -- point fixe : Y f = f (Y f)
+
+-- booléens de Church : VRAI choisit le 1er argument, FAUX le 2e
+VRAI = λa b. a
+FAUX = λa b. b
+SI = λc a b. c a b
+ET = λp q. p q p
+OU = λp q. p p q
+NON = λp. p FAUX VRAI
+
+-- entiers de Church : n = « appliquer f n fois »   (3 = λf x. f (f (f x)))
+SUCC = λn f x. f (n f x)
+PLUS = λm n f x. m f (n f x)
+FOIS = λm n f. m (n f)
+PUISS = λb e. e b
+PRED = λn f x. n (λg h. h (g f)) (λu. x) (λu. u)
+MOINS = λm n. n PRED m
+ZERO? = λn. n (λx. FAUX) VRAI
+INF? = λm n. ZERO? (MOINS m n)        -- m ≤ n
+EGAL? = λm n. ET (INF? m n) (INF? n m)
+
+-- paires
+PAIRE = λa b f. f a b
+PREMIER = λp. p VRAI
+SECOND = λp. p FAUX
+
+-- listes (une liste est son propre « fold » : [a, b] = λc n. c a (c b n))
+NIL = λc n. n
+CONS = λt q c n. c t (q c n)
+SOMME = λl. l PLUS 0
+LONGUEUR = λl. l (λt r. SUCC r) 0
+CARTE = λf l c n. l (λt r. c (f t) r) n
+
+-- récursion avec Y
+FACT = Y (λr n. SI (ZERO? n) 1 (FOIS n (r (PRED n))))
+FIB = Y (λr n. SI (INF? n 1) n (PLUS (r (PRED n)) (r (MOINS n 2))))
+SOMME_JUSQUA = Y (λr n. SI (ZERO? n) 0 (PLUS n (r (PRED n))))

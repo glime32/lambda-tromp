@@ -1,25 +1,31 @@
-# lambda-tromp
+<p align="center"><img src="docs/banner-lambda-tromp.png" alt="lambda-tromp" width="100%"></p>
 
-Un interpréteur de **λ-calcul pur** qui dessine les termes en **diagrammes de Tromp**.
+<p align="center"><img src="https://img.shields.io/badge/Python-no%20dependencies-3776ab?style=flat-square" alt="Python"> <img src="https://img.shields.io/badge/license-MIT-610089?style=flat-square" alt="license"></p>
 
-Le λ-calcul (Church, 1936) est un langage qui n'a *que* des fonctions à un argument : pas de nombres, pas de booléens, pas de `if`, pas de boucles. Et pourtant on peut tout calculer avec. Ici, `FACT 4` donne bien 24, mais 24 est une fonction, `SI` est une fonction, et la récursion vient du combinateur **Y**, une fonction qui n'a même pas besoin de nom.
+A **pure λ-calculus** interpreter that draws terms as **Tromp diagrams**.
 
-![Le combinateur Y](images/y.svg)
+<p align="center"><a href="README.fr.md">🇫🇷 Version française</a></p>
 
-*Le combinateur Y en diagramme de Tromp : `λf. (λx. f (x x)) (λx. f (x x))`.*
+The λ-calculus (Church, 1936) is a language that has *only* one-argument functions: no numbers, no booleans, no `if`, no loops. And yet it can compute anything. Here, `FACT 4` does give 24, but 24 is a function, `SI` (if) is a function, and recursion comes from the **Y** combinator, a function that doesn't even need a name.
 
-![PLUS 1 2 réduit pas à pas](images/film.svg)
+![The Y combinator](images/y.svg)
 
-*`PLUS 1 2`, une réduction β par image, jusqu'à `3`.*
+*The Y combinator as a Tromp diagram: `λf. (λx. f (x x)) (λx. f (x x))`.*
 
-## Utilisation
+![PLUS 1 2 reduced step by step](images/film.svg)
+
+*`PLUS 1 2`, one β-reduction per frame, down to `3`.*
+
+## Usage
 
 ```sh
-python3 lambda.py                  # boucle interactive, prélude chargé
-python3 lambda.py exemples.lam     # exécuter un fichier
-python3 lambda.py -e "FACT 4"      # une expression
-python3 tests.py                   # 20 vérifications
+python3 lambda.py                  # interactive loop, prelude loaded
+python3 lambda.py exemples.lam     # run a file
+python3 lambda.py -e "FACT 4"      # one expression
+python3 tests.py                   # 20 checks
 ```
+
+The interpreter talks French (`réductions β` = β-reductions, `:dessin` = drawing):
 
 ```
 λ> FIB 7
@@ -37,35 +43,37 @@ python3 tests.py                   # 20 vérifications
 λ> :film plus.svg PLUS 1 2
 ```
 
-On écrit `λx y. corps` ou `\x y. corps`, l'application se fait par juxtaposition (`f a b`), les nombres sont des entiers de Church, et `NOM = terme` définit un raccourci. Le [prélude](prelude.lam) fournit booléens, entiers, paires, listes, `Y`, `FACT`, `FIB`...
+Write `λx y. body` or `\x y. body`, application is juxtaposition (`f a b`), numbers are Church numerals, and `NAME = term` defines a shortcut. The [prelude](prelude.lam) provides booleans, numbers, pairs, lists, `Y`, `FACT`, `FIB`...
 
-Quand le résultat est un entier, un booléen ou une définition connue, il est reconnu : `λn. PLUS 1 n` est affiché comme `SUCC`, parce que sa forme normale est exactement celle de `SUCC`.
+When the result is a number, a boolean or a known definition, it is recognised: `λn. PLUS 1 n` is shown as `SUCC`, because its normal form is exactly that of `SUCC`.
 
-## Comment ça marche
+## How it works
 
-**Indices de de Bruijn.** En interne, une variable n'a pas de nom mais un numéro : le nombre de λ à remonter pour trouver celui qui la lie. `λx. λy. x` devient `λ λ 1`. Plus aucun risque de capture de variable lors d'une substitution, et deux termes équivalents (au renommage près) sont *égaux*. Les noms ne servent qu'à l'affichage, et sont renommés (`x'`) quand ils prêteraient à confusion.
+**De Bruijn indices.** Internally, a variable has no name but a number: how many λs to go up to find the one that binds it. `λx. λy. x` becomes `λ λ 1`. No more risk of variable capture during substitution, and two equivalent terms (up to renaming) are *equal*. Names are only for display, and get renamed (`x'`) when they would be confusing.
 
-**Ordre normal.** À chaque étape on réduit le rédex le plus à gauche et le plus à l'extérieur. Cet ordre a une propriété remarquable (théorème de standardisation) : si une forme normale existe, il la trouve. C'est indispensable avec `Y`, qui partirait à l'infini dans un autre ordre.
+**Normal order.** At each step, the leftmost outermost redex is reduced. This order has a remarkable property (the standardisation theorem): if a normal form exists, it finds it. That's essential with `Y`, which would run off to infinity in another order.
 
-**Partage.** Chaque sous-terme connaît le plus grand indice libre qu'il contient. Une substitution ou un décalage qui ne peut pas le toucher le renvoie tel quel au lieu de le reconstruire : `exemples.lam` est passé de 26 s à 1 s grâce à ça.
+**Sharing.** Each subterm knows the largest free index it contains. A substitution or a shift that can't touch it returns it as is instead of rebuilding it: `exemples.lam` went from 26 s to 1 s thanks to that.
 
-**Normalisation par évaluation (`:rapide`).** Un deuxième moteur, qui ne compte pas les étapes : le terme est traduit en vraies fermetures Python, paresseuses (un argument n'est calculé que s'il sert, et une seule fois), on les exécute, puis on « relit » le résultat en terme en appliquant les fonctions à des variables neutres. `tests.py` vérifie que les deux moteurs trouvent toujours la même forme normale. Un « carburant » arrête les calculs qui ne finissent pas (`OMEGA`).
+**Normalisation by evaluation (`:rapide`).** A second engine, which doesn't count steps: the term is translated into real, lazy Python closures (an argument is only computed if it's used, and only once), they run, then the result is "read back" into a term by applying the functions to neutral variables. `tests.py` checks that both engines always find the same normal form. A "fuel" counter stops computations that never end (`OMEGA`).
 
-**Diagrammes de Tromp.** Inventés par John Tromp :
-- chaque λ est une barre horizontale (orange) ;
-- chaque variable est un trait vertical qui descend de la barre du λ qui la lie ;
-- une application relie par un trait horizontal (en bas) le trait de la fonction et celui de l'argument ; celui de la fonction continue vers le bas.
+**Tromp diagrams.** Invented by John Tromp:
+- each λ is a horizontal bar (orange);
+- each variable is a vertical line going down from the bar of the λ that binds it;
+- an application links the function's line and the argument's line with a horizontal line (at the bottom); the function's line keeps going down.
 
-Un entier de Church `n = λf x. f (f (… x))` devient un peigne à n dents :
+A Church numeral `n = λf x. f (f (… x))` becomes a comb with n teeth:
 
-![SUCC et 2](images/succ.svg)
+![SUCC and 2](images/succ.svg)
 
-## Le prélude en une ligne chacun
+## The prelude, one line each
+
+The prelude uses French names: `VRAI` = true, `FAUX` = false.
 
 | | |
 |---|---|
-| `VRAI = λa b. a`, `FAUX = λa b. b` | un booléen *choisit* entre deux valeurs |
-| `3 = λf x. f (f (f x))` | un entier est « appliquer f n fois » |
-| `PLUS = λm n f x. m f (n f x)` | f n fois, puis m fois |
-| `PRED = λn f x. n (λg h. h (g f)) (λu. x) (λu. u)` | le prédécesseur, étonnamment difficile (Kleene l'aurait trouvé chez le dentiste) |
-| `Y = λf. (λx. f (x x)) (λx. f (x x))` | `Y g` se réduit en `g (Y g)` : la récursion |
+| `VRAI = λa b. a`, `FAUX = λa b. b` | a boolean *chooses* between two values |
+| `3 = λf x. f (f (f x))` | a number is "apply f n times" |
+| `PLUS = λm n f x. m f (n f x)` | f n times, then m times |
+| `PRED = λn f x. n (λg h. h (g f)) (λu. x) (λu. u)` | the predecessor, surprisingly hard (Kleene supposedly found it at the dentist's) |
+| `Y = λf. (λx. f (x x)) (λx. f (x x))` | `Y g` reduces to `g (Y g)`: recursion |
